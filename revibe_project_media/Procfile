@@ -1,1 +1,3 @@
-web: gunicorn lms.wsgi:application --log-file –
+web: gunicorn revibe_project.wsgi:application --chdir REVIBE_PROJECT_MEDIA
+
+
