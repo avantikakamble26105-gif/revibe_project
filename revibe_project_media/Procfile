@@ -1,1 +1,1 @@
-web: gunicorn revibe_project.wsgi:application
+web: gunicorn revibe_project.wsgi:application --chdir revibe_project_media/revibe_project_media
