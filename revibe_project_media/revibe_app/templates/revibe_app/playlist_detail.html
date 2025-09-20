@@ -1,0 +1,39 @@
+{% extends 'revibe_app/base.html' %}
+{% block title %}{{ p.title }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="text-center">
+    <h2>{{ p.title }}</h2>
+    <p>{{ p.mood }} — {{ p.duration }} min</p>
+  </div>
+  <div class="playlist">
+    {% for s in p.songs.all %}
+      <div class="card">
+        <p>{{ s.title }}</p>
+        <audio controls class="audio-player">
+          <source src="{{ s.file.url }}" type="audio/mpeg">
+        </audio>
+      </div>
+    {% empty %}
+      <p>No songs in this playlist.</p>
+    {% endfor %}
+  </div>
+
+  <p><a class="btn" href="{% url 'myplaylist' %}">Back</a></p>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const audios = document.querySelectorAll("audio");
+
+  audios.forEach(audio => {
+    audio.addEventListener("play", () => {
+      audios.forEach(otherAudio => {
+        if (otherAudio !== audio) {
+          otherAudio.pause();
+        }
+      });
+    });
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'revibe_app/base.html' %}
+{% block title %}My Playlists{% endblock %}
+{% block content %}
+<section class="section">
+  <h2>My Playlists</h2>
+  <p><a class="btn" href="{% url 'playlist_create' %}">Create New</a></p>
+  <div class="playlist">
+    {% for p in playlists %}
+      <div class="card">
+        <h4>{{ p.title }}</h4>
+        <p>{{ p.mood }} — {{ p.duration }} min</p>
+        <p>
+          <a class="btn" href="{% url 'playlist_detail' p.pk %}">View</a>
+          <a class="btn" href="{% url 'playlist_edit' p.pk %}">Edit</a>
+          <form method="post" action="{% url 'playlist_delete' p.pk %}" style="display:inline">{% csrf_token %}<button class="btn" type="submit">Delete</button></form>
+        </p>
+      </div>
+    {% empty %}
+      <p>No playlists yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

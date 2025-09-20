@@ -1,0 +1,112 @@
+{% extends 'revibe_app/base.html' %}
+{% load static %}  
+{% block title %}Generate Playlist{% endblock %}
+{% block content %}
+<section class="section">
+  <h2>Generate a Playlist</h2>
+  <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Generate</button>
+  </form>
+    {% if results %}
+  <div class="playlist-player"
+       {% if playlist_cover %}
+       style="background: url('{{ playlist_cover.url }}') no-repeat center/cover;
+              backdrop-filter: blur(30px);"
+       {% endif %}>
+  
+    <div class="player-card">
+      {% if playlist_cover %}
+        <img src="{{ playlist_cover.url }}" alt="Cover" class="cover">
+      {% endif %}
+
+      <h3 id="song-title">{{ results.0.title }}</h3>
+
+      <!-- Audio element -->
+    <audio id="audio-player" controls style="display:none;">
+      {% for song in results %}
+        <source src="{{ song.file.url }}" type="audio/mpeg" data-title="{{ song.title }}">
+      {% endfor %}
+    </audio>
+
+      <!-- Progress -->
+      <div class="progress-container">
+        <span id="current-time">0:00</span>
+        <input type="range" id="progress" value="0" min="0" max="100">
+        <span id="duration">0:00</span>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button onclick="prevSong()">⏮️</button>
+        <button onclick="togglePlay()" id="play-btn">▶️</button>
+        <button onclick="nextSong()">⏭️</button>
+      </div>
+    </div>
+  </div>
+   <script>
+  const audio = document.getElementById("audio-player");
+  const sources = audio.querySelectorAll("source");
+  const playBtn = document.getElementById("play-btn");
+  const progress = document.getElementById("progress");
+  const currentTimeEl = document.getElementById("current-time");
+  const durationEl = document.getElementById("duration");
+  let currentIndex = 0;
+
+  function loadSong(index) {
+    currentIndex = index;
+    const source = sources[currentIndex];
+    audio.src = source.src;
+    document.getElementById("song-title").innerText = source.dataset.title;
+    audio.load();
+    audio.play();
+    playBtn.innerText = "⏸️";
+  }
+
+  function nextSong() {
+    currentIndex = (currentIndex + 1) % sources.length;
+    loadSong(currentIndex);
+  }
+
+  function prevSong() {
+    currentIndex = (currentIndex - 1 + sources.length) % sources.length;
+    loadSong(currentIndex);
+  }
+
+  function togglePlay() {
+    if (audio.paused) {
+      audio.play();
+      playBtn.innerText = "⏸️";
+    } else {
+      audio.pause();
+      playBtn.innerText = "▶️";
+    }
+  }
+
+  audio.addEventListener("ended", nextSong);
+
+  audio.addEventListener("timeupdate", () => {
+    if (!audio.duration) return;
+    progress.value = (audio.currentTime / audio.duration) * 100;
+
+    const curMin = Math.floor(audio.currentTime / 60);
+    const curSec = String(Math.floor(audio.currentTime % 60)).padStart(2, "0");
+    currentTimeEl.innerText = `${curMin}:${curSec}`;
+
+    const durMin = Math.floor(audio.duration / 60);
+    const durSec = String(Math.floor(audio.duration % 60)).padStart(2, "0");
+    durationEl.innerText = `${durMin}:${durSec}`;
+  });
+
+  progress.addEventListener("input", () => {
+    if (!audio.duration) return;
+    audio.currentTime = (progress.value / 100) * audio.duration;
+  });
+
+  if (sources.length) {
+    loadSong(0);
+  }
+</script> 
+  {% endif %}
+</section>
+{% endblock %}

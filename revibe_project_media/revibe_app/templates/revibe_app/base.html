@@ -1,0 +1,91 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Revibe - {% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'revibe_app/css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{% url 'index' %}">
+         <img src="{% static 'revibe_app/image/symbol final.png' %}" alt="" class="logo-circle">
+          <span>Revibe: Digital Therapy</span>
+      </a>
+      <nav class="nav">
+        <a class="{% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
+        <a class="{% if request.path == '/generate/' %}active{% endif %}" href="{% url 'generate' %}">Generate</a>
+        <a class="{% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a>
+        <a class="{% if request.path == '/contact/' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
+       {% if user.is_authenticated %}
+  <a class="{% if request.path == '/myplaylist/' %}active{% endif %}" href="{% url 'myplaylist' %}">My Playlists</a>
+<form action="{% url 'logout' %}" method="post" class="logout-form">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+{% else %}
+  <a class="{% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Login</a>
+  <a class="{% if request.path == '/signup/' %}active{% endif %}" href="{% url 'signup' %}">Sign up</a>
+{% endif %}
+
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Revibe — Therapy Music</p>
+    </div>
+  </footer>
+   <script>
+  const quotes = [
+    "Music can heal the wounds which medicine cannot touch.",
+    "Let the rhythm of music bring peace to your soul.",
+    "When words fail, music speaks.",
+    "Therapy is when the notes understand your heart.",
+    "Your mind deserves a melody as much as your body deserves rest.",
+    "Music is therapy for the soul.",
+    "Let the rhythm heal you.",
+    "Relax, refresh, revive.",
+    "Every beat tells a story."
+  ];
+
+  function typeQuote(text, elementId, speed=50, callback) {
+    let i = 0;
+    const element = document.getElementById(elementId);
+    element.textContent = "";
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(interval);
+        if (callback) callback();
+      }
+    }, speed);
+  }
+
+  window.addEventListener("load", () => {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    typeQuote(quotes[randomIndex], "splash-quote", 50, () => {
+      setTimeout(() => {
+        const splash = document.getElementById("splash-screen");
+        splash.classList.add("fade-out");
+      }, 2000); // wait 2 seconds after typing
+    });
+  });
+</script>
+<script src="{% static 'revibe_app/js/form-validation.js' %}"></script>
+</body>
+</html>

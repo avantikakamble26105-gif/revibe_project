@@ -1,0 +1,35 @@
+{% extends 'revibe_app/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<!-- Splash Screen (only on homepage) -->
+<div id="splash-screen">
+  <div id="splash-quote"></div>
+</div>
+
+
+<section class="hero">
+  <div class="hero-inner">
+    <h2>Therapy Music for Your Soul</h2>
+    <p class="tagline">New worlds need new solutions.</p>
+    <p>Relax, focus, and rejuvenate with playlists crafted for your mood.</p>
+
+     <div id="quote-box" class="text-lg italic text-center mt-4"></div>
+
+    <a class="btn" href="{% url 'generate' %}">Start Listening</a>
+  </div>
+</section>
+<section class="section playlists">
+  <h3>Featured Playlists</h3>
+  <div class="playlist">
+    {% for p in featured %}
+      <div class="card">
+        <h4>{{ p.title }}</h4>
+        <p>{{ p.mood }} — {{ p.duration }} min</p>
+        <a class="playlist-view-btn" href="{% url 'playlist_detail' p.pk %}">View</a>
+      </div>
+    {% empty %}
+      <p>No featured playlists yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

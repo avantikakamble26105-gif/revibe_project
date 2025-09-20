@@ -1,0 +1,489 @@
+/* Pastel Blue Theme for Revibe */ 
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter, 'Segoe UI', Arial, sans-serif;background:linear-gradient(180deg, #EAF6FF, #D6F0FF, #C7EFFF);color:#333;min-height:100vh}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.site-header{background:linear-gradient(90deg,#DFF6FF,#EAF6FF);padding:12px 0;box-shadow:0 2px 6px rgba(100,140,160,0.08);margin-bottom:18px}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;color:#17617A;font-size:1.4rem;text-decoration:none;padding-left:8px}
+.nav a{color:#17617A;text-decoration:none;margin-left:16px;padding:6px 8px;border-radius:8px}
+.nav a.active{background:#CDEFF9}
+.link-btn{background:none;border:none;color:#17617A;cursor:pointer;font-weight:600}
+.hero{background:linear-gradient(180deg,rgba(255,255,255,0.8),rgba(255,255,255,0.6));padding:48px;border-radius:12px;text-align:center;margin-bottom:20px;box-shadow:0 6px 20px rgba(100,140,160,0.06)}
+.hero h2{color:#0F5163;font-size:2.2rem;margin-bottom:10px}
+.hero p{color:#3d5a62;margin-bottom:16px}
+.btn{display: inline-block;background: linear-gradient(90deg,#8ECFE5,#A59FEF);color:#063242;padding:8px 20px;border-radius:20px;border:none;font-weight:600;text-align: center; margin:12px auto 0; width:auto;cursor:pointer}
+.section{background:#fff;padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(100,140,160,0.04);margin-bottom:18px}
+h3{color:#17617A;margin-bottom:12px}
+.playlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;width: 100%;color: #222;font-width:700;text-align: center}
+.card{background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(20,80,100,0.04);box-shadow:0 6px 12px rgba(20,80,100,0.03)}
+.messages{margin-bottom:12px}
+.message{padding:10px;border-radius:8px;margin-bottom:8px}
+.message.success{background:#E6F9F2;color:#0B6A4A}
+.message.danger{background:#fff; border-radius:10px; padding:14px; border:1px solid #ddd;text-align: center}
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid rgba(20,80,100,0.04);
+  box-shadow: 0 6px 12px rgba(20,80,100,0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;    
+  text-align: center;
+  gap: 10px;
+  min-height: 140px;
+}
+
+.card h4 {
+  margin: 0 0 8px 0;
+  color: #144e75;
+  font-weight: 600;
+  width: 100%; 
+}
+
+.card p {
+  margin: 0 0 10px 0;
+  color: #446b7d;
+  width: 100%; 
+}
+
+.card .btn {
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  border-radius: 18px;
+  margin-top: auto;
+  align-self: center;
+  display: inline-block;
+
+}
+.site-footer{margin-top:24px;padding:12px 0;text-align:center;color:#4a6b74}
+form input[type=text], form input[type=number], form select, form textarea {width:100%;padding:8px;border-radius:6px;border:1px solid #d9eef6;margin-top:6px}
+@media (max-width:600px){ .header-inner{flex-direction:column;align-items:flex-start} .nav{margin-top:8px} .hero{padding:28px} }
+#quote-box {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #2c4c54;
+  margin-top: 16px;
+  min-height: 24px; /* prevents layout shift before text loads */
+}
+
+/* 🔹 Splash Screen Overlay */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #a1d6fd, #ffffff); /* pastel theme */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* always on top */
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+/* 🔹 Fades out when hidden */
+#splash-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* 🔹 Quote inside splash */
+#splash-quote {
+  font-size: 1.8rem;
+  font-weight: 600;
+  font-style: italic;
+  color: #17617A;
+  text-align: center;
+  padding: 20px;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+  text-shadow: 1px 1px 8px rgba(0,0,0,0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* --- Hero improvements --- */
+.hero {
+  background: linear-gradient(180deg, #ffffff, #eaf6ff);
+  border-radius: 16px;
+  padding: 60px;
+  box-shadow: 0 8px 20px rgba(100, 140, 160, 0.1);
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  color: #144e75;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #446b7d;
+  margin-bottom: 24px;
+}
+
+/* --- Cards --- */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Buttons --- */
+.btn:hover {
+  box-shadow: 0 0 12px rgba(142, 207, 229, 0.6);
+  transform: scale(1.05);
+}
+/* === Form Styling === */
+
+/* Form Container */
+form {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+/* Labels */
+form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #144e75;
+}
+
+/* Input Fields */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  transition: border-color 0.3s ease;
+}
+
+/* Focused Input */
+form input:focus {
+  border-color: #48c6ef;
+  outline: none;
+  box-shadow: 0 0 6px rgba(72,198,239,0.5);
+}
+
+/* Error Messages */
+.errorlist {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: -8px;
+  margin-bottom: 12px;
+  list-style: none;
+  padding: 0;
+}
+
+/* Help Text (rules like password requirements) */
+.helptext {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
+
+/* Make helptext turn red on error */
+input:invalid + .helptext {
+  color: red;
+}
+
+/* Submit Button */
+form button, form input[type="submit"] {
+  background: linear-gradient(90deg, #48c6ef, #6f86d6);
+  border: none;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+form button:hover, form input[type="submit"]:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(111,134,214,0.3);
+}
+.brand {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0077b6;
+  text-decoration: none;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0077b6;
+  margin: 6px 0;
+}
+.playlists { 
+  background: url("../image/Gradient.jpg.jpeg") center/cover no-repeat; 
+  border-radius: 16px; 
+  padding: 40px 20px; 
+  box-shadow: 0 6px 20px rgba(100, 140, 160, 0.08); 
+}
+.btn {
+  display: inline-block;
+  background: linear-gradient(90deg, #8ECFE5, #A59FEF);
+  color: #063242;
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  text-align: center;
+  margin: 12px auto 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -150%;
+  width: 150%; height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px); /* subtle pop */
+}
+
+.btn:hover::after {
+  left: 150%; /* wave animation across button */
+}
+.brand {
+  display: flex;
+  flex-direction: column; /* logo on top, text below */
+  align-items: center;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #17617A;
+}
+
+.brand .logo {
+  height: 40px;   /* adjust as needed */
+  margin-bottom: 4px; /* space between logo and text */
+}
+
+.logo-circle {
+  width: 75px;       /* adjust size */
+  height: 75px;      /* make it equal for circle */
+  border-radius: 50%; /* makes it a circle */
+  object-fit: cover;  /* ensures logo fits well */
+  border: 2px solid #fff; /* optional white border */
+  background: #e6f2ff; /* fallback bg in case logo has transparent parts */
+  padding: 5px;       /* optional padding */
+}
+/* Basic button look (match your current style) */
+.playlist-view-btn {
+  position: relative;
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 22px;
+  background: linear-gradient(90deg, #d9f0fb, #e9dbff);
+  color: #0a4660;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.03);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  overflow: visible; /* needed for pseudo-element */
+}
+
+/* small hover lift */
+.playlist-view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* wave underline pseudo-element */
+.playlist-view-btn::after {
+  content: "";
+  position: absolute;
+  left: 10%;               /* how wide the wave line will be relative to button */
+  right: 10%;
+  bottom: -10px;           /* gap between button and wave; adjust as needed */
+  height: 12px;            /* vertical size of the wave */
+  pointer-events: none;    /* don't block clicks */
+  background-repeat: repeat-x;
+  background-position: 0 50%;
+  background-size: 36px 12px; /* width x height of one wave tile */
+  /* tiny inline SVG wave — transparent background and blue stroke; adjust stroke color */
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='36' height='12' viewBox='0 0 36 12'>\
+<path d='M0 6 C6 0 12 12 18 6 C24 0 30 12 36 6' fill='none' stroke='%23006480' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/>\
+</svg>");
+  opacity: 0;              /* hidden until hover */
+  transform-origin: left center;
+  transition: opacity 200ms ease, transform 300ms ease;
+  /* animation declared but paused by default */
+  animation: waveMove 3s linear infinite;
+  animation-play-state: paused;
+}
+
+/* On hover — fade in and run the animation */
+.playlist-view-btn:hover::after,
+.playlist-view-btn:focus::after {
+  opacity: 1;
+  animation-play-state: running;
+  transform: translateY(-1px);
+}
+
+/* moving the background to create the illusion of flow */
+@keyframes waveMove {
+  from { background-position: 0 50%; }
+  to   { background-position: 72px 50%; } /* move two tiles (2 * background-size width) */
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .playlist-view-btn::after {
+    animation: none;
+    transition: opacity 120ms linear;
+  }
+}
+audio {
+  width: 100%;       /* makes it fit the container */
+  max-width: 400px;  /* prevents it from stretching too wide */
+  display: block;
+  margin: 0.5 rem auto 0;    /* centers the player */
+}
+.song-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 15px 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: #111;
+  color: white;
+}
+
+.song-card img.cover {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.song-info h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.song-info p {
+  margin: 2px 0 6px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.song-player {
+  width: 100%;
+}
+.playlist-player {
+  margin: 20px auto;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 20px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.player-card img.cover {
+  width: 160px;
+  height: 160px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
+.progress-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.controls button {
+  font-size: 20px;
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #4da6ff;
+  color: white;
+  cursor: pointer;
+}
+
+.progress-container input[type="range"] {
+  flex: 1;
+  max-width: 250px;
+}
+
+.logout-form {
+  display: inline; /* keeps it inline with nav items */
+  margin: 0;
+  padding: 0;
+}
+
+.logout-form button {
+  background: none;
+  border: none;
+  color: #245b6e;   /* same as your nav links */
+  font: inherit;
+  cursor: pointer;
+  padding: 0 15px;  /* spacing like other links */
+}
+
+.logout-form button:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
