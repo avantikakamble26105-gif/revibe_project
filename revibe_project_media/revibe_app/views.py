@@ -72,22 +72,19 @@ def generate(request):
             save = form.cleaned_data['save'] 
             title = form.cleaned_data['title'] or f"{mood} — {duration}min Mix"
 
-            # each song ~3 min
-            approx_len = 3  
+            approx_len = 3  # each song ~3 min
             count = max(1, duration // approx_len)
 
-            # ✅ Only use playlists
             available_playlists = list(Playlist.objects.filter(mood__iexact=mood))
 
             if available_playlists:
                 chosen = random.choice(available_playlists)
-                results = list(chosen.songs.all()[:count])  # pick songs from playlist
+                results = chosen.songs.all()[:count]
                 playlist_title = chosen.title
                 playlist_cover = chosen.cover  
             else:
                 messages.error(request, f"No playlists found for mood '{mood}'")
 
-            # ✅ Save playlist if requested
             if save and results:
                 if request.user.is_authenticated:
                     playlist = Playlist.objects.create(
@@ -141,7 +138,10 @@ def playlist_edit(request, pk):
         p.title = request.POST.get('title')
         p.mood = request.POST.get('mood')
         p.duration = request.POST.get('duration')
-        p.songs.set(Song.objects.filter(title__in=[s.strip() for s in request.POST.get('songs', '').split(',') if s.strip()]))
+        song_ids = request.POST.getlist('songs')   # get selected songs from form
+        songs = Song.objects.filter(id__in=song_ids)
+        p.songs.set(songs)
+        p.save()
         messages.success(request, 'Playlist updated.')
         return redirect('playlist_detail', pk=p.pk)
     return render(request, 'revibe_app/playlist_form.html', {'p': p})
