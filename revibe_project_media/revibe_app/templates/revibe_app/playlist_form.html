@@ -6,10 +6,10 @@
   <form method="post">{% csrf_token %}
     <p><label>Title<br><input type="text" name="title" value="{{ p.title|default_if_none:'' }}"></label></p>
     <p><label>Mood<br><select name="mood">
-      <option value="Relaxed"{% if p and p.mood=='Relaxed' %} selected{% endif %}>Relaxed</option>
-      <option value="Focused"{% if p and p.mood=='Focused' %} selected{% endif %}>Focused</option>
-      <option value="Energetic"{% if p and p.mood=='Energetic' %} selected{% endif %}>Energetic</option>
-      <option value="Melancholic"{% if p and p.mood=='Melancholic' %} selected{% endif %}>Melancholic</option>
+    <option value="Relaxed"{% if p and p.mood == "Relaxed" %} selected{% endif %}>Relaxed</option>
+    <option value="Focused"{% if p and p.mood == "Focused" %} selected{% endif %}>Focused</option>
+    <option value="Energetic"{% if p and p.mood == "Energetic" %} selected{% endif %}>Energetic</option>
+    <option value="Melancholic"{% if p and p.mood == "Melancholic" %} selected{% endif %}>Melancholic</option>
     </select></label></p>
     <p><label>Duration (minutes)<br><input type="number" name="duration" value="{{ p.duration|default_if_none:30 }}"></label></p>
     <p><label>Songs (comma-separated filenames)<br><input type="text" name="songs" value="{{ p.songs|default_if_none:'' }}"></label></p>
