@@ -17,10 +17,10 @@
       <nav class="nav">
         <a class="{% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
         <a class="{% if request.path == '/generate/' %}active{% endif %}" href="{% url 'generate' %}">Generate</a>
-        <a class="{% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About</a>
-        <a class="{% if request.path == '/contact/' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
        {% if user.is_authenticated %}
   <a class="{% if request.path == '/myplaylist/' %}active{% endif %}" href="{% url 'myplaylist' %}">My Playlists</a>
+  <a class="{% if request.path == '/journal/' %}active{% endif %}" href="{% url 'journal' %}">Journal</a>
+  <a class="{% if request.path == '/profile/' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
 <form action="{% url 'logout' %}" method="post" class="logout-form">
   {% csrf_token %}
   <button type="submit">Logout</button>

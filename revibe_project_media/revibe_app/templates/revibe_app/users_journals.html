@@ -1,0 +1,31 @@
+{% extends 'revibe_app/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">My Journal Entries</h2>
+
+    {% if journals %}
+        <div class="d-flex flex-column align-items-center">
+            {% for journal in journals %}
+                <div class="journal-card mb-4 p-4 w-75 shadow-sm rounded-3" style="background: white;">
+                    <h5 class="journal-title text-primary fw-semibold">
+                        {{ journal.title }}
+                    </h5>
+                    <p class="journal-content" style="font-size: 15px; color: #333;">
+                        {{ journal.content|truncatewords:30 }}
+                    </p>
+                    <p class="journal-date text-muted mb-3">Created on {{ journal.created_at|date:"M d, Y" }}</p>
+
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="{% url 'journal_detail' journal.pk %}" class="btn btn-outline-info btn-sm px-3">View</a>
+                        <a href="{% url 'journal_edit' journal.pk %}" class="btn btn-outline-primary btn-sm px-3">Edit</a>
+                        <a href="{% url 'journal_delete' journal.pk %}" class="btn btn-outline-danger btn-sm px-3">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">You haven't added any journal entries yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import  login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import SignUpForm, ContactForm, GeneratePlaylistForm
-from .models import Playlist, Song
+from .forms import SignUpForm, GeneratePlaylistForm, JournalForm
+from .models import Playlist, Song, Journal
 import random
 import os
 from django.conf import settings
@@ -12,20 +12,6 @@ STATIC_AUDIO = ['sample1.mp3','sample2.mp3','sample3.mp3']
 def index(request):
     featured = Playlist.objects.all().order_by('id')[:4]
     return render(request, 'revibe_app/index.html', {'featured': featured})
-def about(request):
-    return render(request, 'revibe_app/about.html')
-def contact_view(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Message sent — thank you!')
-            return redirect('contact')
-        else:
-            messages.error(request, 'Please correct the form.')
-    else:
-        form = ContactForm()
-    return render(request, 'revibe_app/contact.html', {'form': form})
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -156,3 +142,82 @@ def playlist_delete(request, pk):
         messages.success(request, 'Playlist deleted.')
         return redirect('myplaylist')
     return render(request, 'revibe_app/playlist_confirm_delete.html', {'p': p})
+@login_required
+def journal_view(request):
+    if request.method == 'POST':
+        form = JournalForm(request.POST)
+        if form.is_valid():
+            journal = form.save(commit=False)
+            journal.user = request.user
+            journal.save()
+            messages.success(request, 'Your journal entry has been saved.')
+            return redirect('journal')
+    else:
+        form = JournalForm()
+
+    journals = Journal.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'revibe_app/journal.html', {'form': form, 'journals': journals})
+@login_required
+def profile_view(request):
+    playlists = Playlist.objects.filter(created_by=request.user)
+    journals = Journal.objects.filter(user=request.user)
+    return render(request, 'revibe_app/profile.html', {
+        'user': request.user,
+        'playlists': playlists,
+        'journals': journals
+    })
+@login_required
+def users_journals(request):
+    journals = Journal.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'revibe_app/users_journals.html', {'journals': journals})
+
+@login_required
+def journal_edit(request, pk):
+    journal = get_object_or_404(Journal, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = JournalForm(request.POST, instance=journal)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Journal updated successfully!')
+            return redirect('users_journals')
+    else:
+        form = JournalForm(instance=journal)
+    return render(request, 'revibe_app/journal_edit.html', {'form': form})
+    
+
+@login_required
+def journal_delete(request, pk):
+    journal = get_object_or_404(Journal, pk=pk, user=request.user)
+    if request.method == 'POST':
+        journal.delete()
+        messages.success(request, 'Journal deleted successfully!')
+        return redirect('users_journals')
+    return render(request, 'revibe_app/journal_confirm_delete.html', {'journal': journal})
+
+@login_required
+def journal_detail(request, pk):
+    journal = get_object_or_404(Journal, pk=pk, user=request.user)
+    return render(request, 'revibe_app/journal_detail.html', {'journal': journal})
+
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render, redirect
+
+@login_required
+def edit_profile(request):
+    user = request.user
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+
+        if username and email:
+            user.username = username
+            user.email = email
+            user.save()
+            messages.success(request, "Profile updated successfully!")
+            return redirect('profile')
+
+    return render(request, 'revibe_app/edit_profile.html', {'user': user})
+
+
