@@ -2,10 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 MOOD_CHOICES = [
-    ('Relaxed','Relaxed'),
-    ('Focused','Focused'),
-    ('Energetic','Energetic'),
-    ('Melancholic','Melancholic'),
+    ('Relaxed', 'Relaxed'),
+    ('Focused', 'Focused'),
+    ('Energetic', 'Energetic'),
+    ('Melancholic', 'Melancholic'),
+    ('Relaxed & Focused', 'Relaxed & Focused'),
+    ('Energetic & Focused', 'Energetic & Focused'),
+    ('Relaxed & Melancholic', 'Relaxed & Melancholic'),
 ]
 
 class Song(models.Model):

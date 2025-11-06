@@ -13,11 +13,19 @@ class ContactForm(forms.ModelForm):
         model = ContactMessage
         fields = ['name','email','message']
 class GeneratePlaylistForm(forms.Form):
-    MOODS = [('Relaxed','Relaxed'),('Focused','Focused'),('Energetic','Energetic'),('Melancholic','Melancholic')]
-    mood = forms.ChoiceField(choices=MOODS)
-    duration = forms.IntegerField(min_value=1, max_value=360, initial=30)
-    save = forms.BooleanField(required=False)
-    title = forms.CharField(required=False)
+   MOODS = [
+    ('Relaxed', 'Relaxed'),
+    ('Focused', 'Focused'),
+    ('Energetic', 'Energetic'),
+    ('Melancholic', 'Melancholic'),
+    ('Relaxed & Focused', 'Relaxed & Focused'),
+    ('Energetic & Focused', 'Energetic & Focused'),
+    ('Relaxed & Melancholic', 'Relaxed & Melancholic'),
+    ]
+   mood = forms.ChoiceField(choices=MOODS)
+   duration = forms.IntegerField(min_value=1, max_value=360, initial=30)
+   save = forms.BooleanField(required=False)
+   title = forms.CharField(required=False)
 class JournalForm(forms.ModelForm):
     class Meta:
         model = Journal

@@ -57,6 +57,7 @@ STATICFILES_DIRS = [BASE_DIR / 'revibe_app' / 'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
+LOGIN_URL = '/login/'
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.DEBUG: 'debug',

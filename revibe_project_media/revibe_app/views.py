@@ -19,12 +19,16 @@ def login_view(request):
             user = form.get_user()
             login(request, user)
             messages.success(request, 'Logged in successfully.')
-            return redirect('index')
+            next_url = request.GET.get('next', 'index')
+            return redirect(next_url)
         else:
             messages.error(request, 'Invalid credentials.')
     else:
+        if 'next' in request.GET:
+            messages.info(request, 'Please log in to continue.')
         form = AuthenticationForm()
     return render(request, 'revibe_app/login.html', {'form': form})
+
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
