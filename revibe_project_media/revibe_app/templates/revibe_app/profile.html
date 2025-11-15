@@ -5,11 +5,10 @@
 <div class="profile-container">
 
     <div class="profile-header">
-        {% if user.gender == 'female' %}
-            <img src="{% static 'revibe_app/image/female.png' %}" alt="Female" class="profile-img">
-        {% else %}
-            <img src="{% static 'revibe_app/image/male.png' %}" alt="Male" class="profile-img">
-        {% endif %}
+            <div class="initials">
+                <h1 class="profile-img">{{user.username|slice:":2"|upper}}</h1>
+            </div>
+            <!-- <img src="{% static 'revibe_app/image/male.png' %}" alt="Male" class="profile-img"> -->
         <h3 class="username">{{ user.username }}</h3>
         <p class="email">{{ user.email }}</p>
     </div>

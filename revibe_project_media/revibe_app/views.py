@@ -4,6 +4,7 @@ from django.contrib.auth import  login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm, GeneratePlaylistForm, JournalForm
+
 from .models import Playlist, Song, Journal
 import random
 import os
@@ -42,6 +43,7 @@ def signup_view(request):
     else:
         form = SignUpForm()
     return render(request, 'revibe_app/signup.html', {'form': form})
+
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
@@ -49,6 +51,7 @@ def logout_view(request):
     return redirect('index')
 import os
 from django.conf import settings
+@login_required
 def generate(request):
     results = []
     playlist_title = None
